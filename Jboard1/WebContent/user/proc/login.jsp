@@ -2,29 +2,30 @@
 <%@page import="kr.co.jboard1.bean.MemberBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
-
-	String uid = request.getParameter("uid");
+	
+	String uid  = request.getParameter("uid");
 	String pass = request.getParameter("pass");
-
+	
+	// 1, 2단계
 	Connection conn = DBConfig.getConnection();
 	
 	// 3단계
 	Statement stmt = conn.createStatement();
 	
-	//4단계
+	// 4단계
 	String sql  = "SELECT * FROM `JBOARD_MEMBER` ";
-		   sql += "WHERE `uid`='"+uid+"' AND `pass` =PASSWORD('"+pass+"')";
+	       sql += "WHERE `uid`='"+uid+"' AND `pass`=PASSWORD('"+pass+"')";
 	
 	ResultSet rs = stmt.executeQuery(sql);
-	
-	//5단계
+	       
+	// 5단계
 	if(rs.next()){
-		// 회원일 경우	
+		// 회원일 경우
 		MemberBean mb = new MemberBean();
 		mb.setUid(rs.getString(1));
 		mb.setPass(rs.getString(2));
@@ -41,7 +42,7 @@
 		
 		// 세션에 사용자 정보객체 저장
 		session.setAttribute("member", mb);
-
+		
 		// 리스트 이동
 		response.sendRedirect("/Jboard1/list.jsp");
 		
@@ -50,11 +51,8 @@
 		response.sendRedirect("/Jboard1/user/login.jsp?result=fail");
 	}
 	
-	//6단계
+	// 6단계
 	rs.close();
 	stmt.close();
-	conn.close();
-	
-	//리다이렉트
-	
+	conn.close();	
 %>
