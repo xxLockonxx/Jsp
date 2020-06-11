@@ -16,7 +16,7 @@ public class DBConfig {
 	public static final String USER = "lsj";
 	public static final String PASS = "1234";
 	
-	public static Connection getConnection() throws ClassNotFoundException, SQLException  {
+	public static Connection getConnection() throws Exception  {
 		// 1´Ü°è
 		Class.forName("com.mysql.jdbc.Driver");
 

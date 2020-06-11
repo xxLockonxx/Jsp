@@ -1,4 +1,17 @@
+<%@page import="kr.co.jboard1.bean.ArticleBean"%>
+<%@page import="kr.co.jboard1.bean.MemberBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // 세션체크 및 사용자 정보객체 구하기
+	MemberBean mb = (MemberBean) session.getAttribute("member");
+
+	if(mb == null){
+		response.sendRedirect("/Jboard1/user/login.jsp");
+	}
+	
+	ArticleBean article = (ArticleBean) session.getAttribute("article");
+	
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,16 +24,17 @@
         <section id="board" class="modify">
             <h3>글수정</h3>
             <article>
-                <form action="#">
+                <form action="/Jboard1/proc/modify.jsp">
+               		<input type="hidden" name="seq" value="<%= article.getSeq() %>" />
                     <table>
                         <tr>
                             <td>제목</td>
-                            <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                            <td><input type="text" name="title" value="<%= article.getTitle() %>" placeholder="제목을 입력하세요."/></td>
                         </tr>
                         <tr>
                             <td>내용</td>
                             <td>
-                                <textarea name="content"></textarea>                                
+                                <textarea name="content"><%= article.getContent() %></textarea>                                
                             </td>
                         </tr>
                         <tr>
@@ -29,7 +43,7 @@
                         </tr>
                     </table>
                     <div>
-                        <a href="./list.html" class="btnCancel">취소</a>
+                        <a href="/Jboard/view.jsp?seq=<%=article.getSeq()%>" class="btnCancel">취소</a>
                         <input type="submit"  class="btnWrite" value="수정완료">
                     </div>
                 </form>
