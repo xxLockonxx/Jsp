@@ -121,7 +121,7 @@
             		
             		var result = confirm("정말 삭제하시겠습니까?");
             		if(result){
-            			return ture;
+            			return true;
             		}else{
             			return false;
             		}
@@ -156,7 +156,7 @@
                     	<%
                 			if(mb.getUid().equals(article.getUid())) {
                 		%>
-                    	<a href="/Jboard1/proc/deleteComment.jsp?seq=<%= comment.getSeq()%>&parent=<%= comment.getParent() %>" onclick="return onDelete()" class="btnDelete">삭제</a>
+                    	<a href="/Jboard1/proc/deleteComment.jsp?seq=<%= comment.getSeq()%>&parent=<%= comment.getParent() %>" onclick="return onDelete()">삭제</a>
                         <a href="#">수정</a>
                         <% } %>
                     </div>

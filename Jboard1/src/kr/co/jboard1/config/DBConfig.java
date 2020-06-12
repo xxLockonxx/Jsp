@@ -9,7 +9,7 @@ public class DBConfig {
 	// DB정보 - 배포용
 	//public static final String HOST = "jdbc:mysql://13.125.215.118:3306/lsj";
 	//public static final String USER = "root";
-	//public static final String PASS = "kivanok88";
+	//public static final String PASS = "tjalvlrhs";
 	
 	// DB정보 - 개발용
 	public static final String HOST = "jdbc:mysql://192.168.44.46:3306/lsj";
