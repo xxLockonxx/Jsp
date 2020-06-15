@@ -1,12 +1,12 @@
 <%@page import="kr.co.jboard1.bean.MemberBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    // 세션체크 및 사용자 정보객체 구하기
+	//세션체크 및 사용자 정보객체 구하기
 	MemberBean mb = (MemberBean) session.getAttribute("member");
-
-	if(mb == null){
+		
+	if(mb == null){		
 		response.sendRedirect("/Jboard1/user/login.jsp");
-	}
+	}	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,7 @@
         <section id="board" class="write">
             <h3>글쓰기</h3>
             <article>
-                <form action="/Jboard1/proc/write.jsp">
+                <form action="/Jboard1/proc/write.jsp" method="post" enctype="multipart/form-data">
                 	<input type="hidden" name="uid" value="<%= mb.getUid() %>" />
                     <table>
                         <tr>
@@ -39,7 +39,7 @@
                         </tr>
                     </table>
                     <div>
-                        <a href="./list.jsp" class="btnCancel">취소</a>
+                        <a href="/Jboard1/list.jsp" class="btnCancel">취소</a>
                         <input type="submit"  class="btnWrite" value="작성완료"/>
                     </div>
                 </form>

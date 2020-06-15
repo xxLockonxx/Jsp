@@ -28,6 +28,8 @@ public class SQL {
 	public final static String SELECT_ARTICLE = "SELECT * FROM `JBOARD_ARTICLE` "
 												+ "WHERE `seq`=?";
 	
+	public final static String SELECT_ARTICLE_MAX_SEQ = "SELECT MAX(`seq`) FROM `JBOARD_ARTICLE`";
+	
 	public final static String SELECT_ARTICLES = "SELECT a.*, b.nick FROM `JBOARD_ARTICLE` AS a "
 												+ "JOIN `JBOARD_MEMBER` AS b "
 												+ "ON a.uid = b.uid "
@@ -38,10 +40,17 @@ public class SQL {
 	public final static String INSERT_ARTICLE = "INSERT INTO `JBOARD_ARTICLE` SET "
 												+ "`title`=?, "
 												+ "`content`=?, "
+												+ "`file`=?, "
 												+ "`uid`=?, "
 												+ "`regip`=?, "
 												+ "`rdate`=NOW()";
 	
+	public final static String INSERT_FILE = "INSERT INTO `JBOARD_FILE` SET "
+										   + "`parent`=?, "
+										   + "`oldName`=?, "
+										   + "`newName`=?, "
+										   + "`rdate`=NOW()";
+
 	public final static String SELECT_COMMENTS = "SELECT a.*, b.nick FROM `JBOARD_ARTICLE` AS a "
 												+ "JOIN `JBOARD_MEMBER` AS b "
 												+ "ON a.uid = b.uid "
