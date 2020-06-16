@@ -20,9 +20,13 @@
 	
 	request.setCharacterEncoding("utf-8");
 	String seq =request.getParameter("seq");
+	String download =request.getParameter("download");
 	// 밑에 24번째 줄이 psmt.setInt(1, seq); 일때는 int num = Integer.parseInt(seq);로 맞춰줘야함.
 	// 1, 2 단계
 	Connection conn = DBConfig.getConnection();
+	
+	// 트랜젝션 시작(begin)
+	conn.setAutoCommit(false);
 	
 	// 3단계
 	PreparedStatement psmtHit = conn.prepareStatement(SQL.UPDATE_HIT);
@@ -81,6 +85,8 @@
 		comments.add(comment);
 	}
 	
+	// 트랜젝션 끝
+	conn.commit();
 	
 	// 6단계
 	rsComment.close();
@@ -99,6 +105,15 @@
     <meta charset="UTF-8">
     <title>글보기</title>
     <link rel="stylesheet" href="./css/style.css"/>
+    <script>
+    
+    	var download ="<%= download %>";
+    	if (download == 'fail'){
+    			alert('해당하는 파일이 없습니다. \n관리자에게 문의하시기 바랍니다.')
+    		}    	
+    	
+    </script>
+    
 </head>
 <body>
     <div id="wrapper">
@@ -171,7 +186,7 @@
                 			if(mb.getUid().equals(article.getUid())) {
                 		%>
                     	<a href="/Jboard1/proc/deleteComment.jsp?seq=<%= comment.getSeq()%>&parent=<%= comment.getParent() %>" onclick="return onDelete()">삭제</a>
-                        <a href="#">수정</a>
+                        <a href="/Jboard1/proc/modifyComment.jsp?seq=">수정</a>
                         <% } %>
                     </div>
                 </article>
