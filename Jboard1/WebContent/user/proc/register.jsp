@@ -17,6 +17,7 @@
 	String addr2 = request.getParameter("addr2");
 	String regip = request.getRemoteAddr();
 	
+	// 1, 2단계
 	Connection conn = DBConfig.getConnection();
 	
 	// 3단계
