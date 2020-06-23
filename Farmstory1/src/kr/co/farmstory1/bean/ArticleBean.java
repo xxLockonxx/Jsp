@@ -1,7 +1,7 @@
 package kr.co.farmstory1.bean;
 
 public class ArticleBean {
-
+	
 	private int seq;
 	private int parent;
 	private int comment;
@@ -14,26 +14,24 @@ public class ArticleBean {
 	private String regip;
 	private String rdate;
 	
-	//�߰��ʵ�
+	// �߰��ʵ�
 	private String nick;
 	private FileBean fileBean;
 	
 	public FileBean getFileBean() {
 		return fileBean;
 	}
-	
 	public void setFileBean(FileBean fileBean) {
 		this.fileBean = fileBean;
 	}
 	
+		
 	public String getNick() {
 		return nick;
 	}
-	
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	
 	
 	
 	public int getSeq() {
@@ -102,6 +100,4 @@ public class ArticleBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
-	
 }

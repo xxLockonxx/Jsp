@@ -1,7 +1,7 @@
 package kr.co.farmstory1.bean;
 
 public class MemberBean {
-	
+	private String uid;
 	private String pass;
 	private String name;
 	private String nick;
@@ -14,7 +14,6 @@ public class MemberBean {
 	private String regip;
 	private String rdate;
 	
-	private String uid;
 	public String getUid() {
 		return uid;
 	}
@@ -87,5 +86,4 @@ public class MemberBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
-	
 }

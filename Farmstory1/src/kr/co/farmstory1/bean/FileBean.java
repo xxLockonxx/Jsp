@@ -1,7 +1,6 @@
 package kr.co.farmstory1.bean;
 
 public class FileBean {
-
 	private int seq;
 	private int parent;
 	private String oldName;
@@ -48,5 +47,5 @@ public class FileBean {
 
 	
 	
-	
+
 }
