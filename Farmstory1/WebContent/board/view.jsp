@@ -17,10 +17,11 @@
 	String download = request.getParameter("download");
 	String asideFile  = "./_aside_"+group+".jsp"; 
 	
-	if(mb == null){		
-		response.sendRedirect("./list.jsp?group="+group+"&cate="+cate);
+	if(mb == null){
+		response.sendRedirect("./list.jsp?code=101&group="+group+"&cate="+cate);
 		return;
 	}
+
 
 	// 1, 2 단계
 	Connection conn = DBConfig.getConnection();
@@ -145,8 +146,15 @@
     	}
     </script>
     <div>
-        <a href="#" onclick="return onDelete()" class="btnDelete">삭제</a>
+    	<%
+          if(mb.getUid().equals(article.getUid())) {
+         %>
+        <a href="./delete.jsp?group=<%= group %>&cate=<%= cate %>&seq=<%= article.getSeq() %>" onclick="return onDelete()" class="btnDelete">삭제</a>
         <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>" class="btnModify">수정</a>
+        <%
+           }
+         %>
+        
         <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>" class="btnList">목록</a>
     </div>
     
