@@ -12,6 +12,13 @@
 	}
 	
 %>
+<script>
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			  height: 300,
+		  });
+		});
+</script>
 <jsp:include page="<%= asideFile %>">
 	<jsp:param value="<%= cate %>" name="cate"/>
 </jsp:include>
@@ -30,7 +37,7 @@
                 <tr>
                     <td>내용</td>
                     <td>
-                        <textarea name="content"></textarea>                                
+                        <textarea id="summernote" name="content"></textarea>
                     </td>
                 </tr>
                 <tr>

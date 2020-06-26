@@ -11,6 +11,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="kr.co.jboard1.config.DBConfig"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%
 	// 파라미터 수신
 	request.setCharacterEncoding("utf-8");

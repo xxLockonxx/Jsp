@@ -11,19 +11,24 @@
 <head>
     <meta charset="UTF-8">
     <title>팜스토리</title>
-    <link rel="stylesheet" href="/Farmstory1/css/style.css"/>
+
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Farmstory1/css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
     <script>
-    	var code = <%= code%>;
-    	if(code == '101' ){
-    		alert('로그인을 먼저 하셔야 합니다.');
-    		location.href = '/Farmstory1/user/login.jsp';
-    	}
-    
-    </script>
-    
+	   	var code = <%= code%>;
+	   	if(code == '101' ){
+	   		alert('로그인을 먼저 하셔야 합니다.');
+	   		location.href = '/Farmstory1/user/login.jsp';
+	   	}
+   </script>
+ 
 </head>
 <body>
     <div id="wrapper">

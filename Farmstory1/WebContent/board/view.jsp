@@ -1,5 +1,5 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="kr.co.farmstory1.bean.FileBean"%>
 <%@page import="kr.co.farmstory1.bean.ArticleBean"%>
 <%@page import="java.sql.ResultSet"%>
@@ -15,29 +15,26 @@
 	String cate     = request.getParameter("cate");
 	String seq      = request.getParameter("seq");
 	String download = request.getParameter("download");
-	String asideFile  = "./_aside_"+group+".jsp"; 
+	String asideFile  = "./_aside_"+group+".jsp";
 	
-	if(mb == null){
+	if(mb == null){		
 		response.sendRedirect("./list.jsp?code=101&group="+group+"&cate="+cate);
 		return;
 	}
-
-
-	// 1, 2 단계
+	// 1, 2단계
 	Connection conn = DBConfig.getConnection();
-	
-	// 트랜젝션 시작(begin)
+	// 트랜젝션 시작
 	conn.setAutoCommit(false);
 	
 	// 3단계
 	PreparedStatement psmtHit = conn.prepareStatement(SQL.UPDATE_HIT);
 	psmtHit.setString(1, seq);
 	
-	PreparedStatement psmtComment = conn.prepareStatement(SQL.SELECT_COMMENTS);
-	psmtComment.setString(1, seq);
-	
 	PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_ARTICLE);
 	psmt.setString(1, seq);
+	
+	PreparedStatement psmtComment = conn.prepareStatement(SQL.SELECT_COMMENTS);
+	psmtComment.setString(1, seq);
 	
 	// 4단계
 	psmtHit.executeUpdate();
@@ -45,10 +42,10 @@
 	ResultSet rsComment = psmtComment.executeQuery();
 	
 	// 5단계
-	ArticleBean article = new ArticleBean(); //if문 밖에서 article선언 해야 전역에서 참조 가능
+	ArticleBean article = new ArticleBean();
 	FileBean fileBean = new FileBean();
 	
-	if(rs.next()){
+	if(rs.next()){		
 		article.setSeq(rs.getInt(1));
 		article.setParent(rs.getInt(2));
 		article.setComment(rs.getInt(3));
@@ -66,24 +63,22 @@
 		fileBean.setOldName(rs.getString(14));
 		fileBean.setNewName(rs.getString(15));
 		fileBean.setDownload(rs.getInt(16));
-		fileBean.setRdate(rs.getString(17));
+		fileBean.setRdate(rs.getString(17));		
 		article.setFileBean(fileBean);
-			
 	}
-	
+			
 	List<ArticleBean> comments = new ArrayList<>();
 	while(rsComment.next()){
 		ArticleBean comment = new ArticleBean();
 		
 		comment.setSeq(rsComment.getInt(1));
-		comment.setParent(rsComment.getInt(2));
 		comment.setContent(rsComment.getString(6));
 		comment.setUid(rsComment.getString(9));
 		comment.setRegip(rsComment.getString(10));
 		comment.setRdate(rsComment.getString(11));
 		comment.setNick(rsComment.getString(12));
 		
-		comments.add(comment);
+		comments.add(comment);		
 	}
 	
 	// 트랜젝션 끝
@@ -93,30 +88,36 @@
 	rsComment.close();
 	psmtComment.close();
 	psmtHit.close();
-	rs.close();
+	rs.close();	
 	psmt.close();
 	conn.close();
 	
 	// 수정을 대비하기 위한 article객체 세션에 저장
 	session.setAttribute("article", article);
-	
 %>
 <jsp:include page="<%= asideFile %>">
 	<jsp:param value="<%= cate %>" name="cate"/>
 </jsp:include>
 <script>
 	var download = "";
-
 	if(download == 'fail'){
 		alert('해당하는 파일이 없습니다.\n관리자에게 문의하시기 바랍니다.');
 	}
+	
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			airMode: true,
+			focus: false
+		});
+	});
 </script>
+
 <section id="board" class="view">
     <h3>글보기</h3>
     <table>
         <tr>
             <td>제목</td>
-            <td><input type="text" name="title" value="<%= article.getTitle()%>" readonly/></td>
+            <td><input type="text" name="title" value="<%= article.getTitle() %>" readonly/></td>
         </tr>
         <% if(article.getFile() == 1){ %>
         <tr>
@@ -130,7 +131,7 @@
         <tr>
             <td>내용</td>
             <td>
-                <textarea name="content" readonly><%= article.getContent() %></textarea>
+                <textarea id="summernote" name="content" readonly><%= article.getContent() %></textarea>
             </td>
         </tr>
     </table>
@@ -146,15 +147,8 @@
     	}
     </script>
     <div>
-    	<%
-          if(mb.getUid().equals(article.getUid())) {
-         %>
-        <a href="./delete.jsp?group=<%= group %>&cate=<%= cate %>&seq=<%= article.getSeq() %>" onclick="return onDelete()" class="btnDelete">삭제</a>
+        <a href="#" onclick="return onDelete()" class="btnDelete">삭제</a>
         <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>" class="btnModify">수정</a>
-        <%
-           }
-         %>
-        
         <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>" class="btnList">목록</a>
     </div>
     
@@ -164,10 +158,10 @@
         <% for(ArticleBean comment : comments){ %>
         <article class="comment">
             <span>
-                <span><%= comment.getNick()%></span>
+                <span><%= comment.getNick() %></span>
                 <span><%= comment.getRdate().substring(2, 10) %></span>
             </span>
-            <textarea name="comment" readonly><%= comment.getContent()%></textarea>
+            <textarea name="comment" readonly><%= comment.getContent() %></textarea>
             <div>
                 <a href="#">삭제</a>
                 <a href="#">수정</a>
@@ -175,8 +169,8 @@
         </article>
         <% } %>
         
-        <% if(article.getComment() == 0){ %>
-       	<p class="empty">등록된 댓글이 없습니다.</p>
+        <% if(article.getComment() == 0){ %>	
+       		<p class="empty">등록된 댓글이 없습니다.</p>
        	<% } %>
     </section>
 
@@ -187,7 +181,7 @@
         	<input type="hidden" name="parent" value="<%= seq %>" />
         	<input type="hidden" name="group" value="<%= group %>" />
         	<input type="hidden" name="cate" value="<%= cate %>" />
-        	<input type="hidden" name="uid" value="<%= mb.getUid()%>" />
+        	<input type="hidden" name="uid" value="<%= mb.getUid() %>" />
             <textarea name="comment"></textarea>
             <div>
                 <a href="#" class="btnCancel">취소</a>
