@@ -32,7 +32,6 @@
 		<li>num1 : ${num1}</li>
 		<li>num2 : ${num2}</li>
 		<li>num1 + num2 : ${num1 + num2}</li>
-		
 	</ul>
 	</body>
 </html>
